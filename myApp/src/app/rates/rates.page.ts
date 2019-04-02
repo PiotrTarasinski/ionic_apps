@@ -28,7 +28,7 @@ export class RatesPage implements OnInit {
   confirmRates(): void {
     let sum = 0;
     this.user.rates.forEach(rate => {
-      sum += Number.parseInt(rate);
+      sum += parseInt(rate);
     });
     this.user.average = sum / this.user.rates.length;
     this.navController.navigateForward('home');

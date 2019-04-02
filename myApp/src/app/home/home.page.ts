@@ -5,7 +5,6 @@ import { RatingService } from '../rating.service';
 import { User } from '../clases/user';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { delay } from 'q';
 
 
 @Component({
@@ -26,14 +25,11 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getUser();
-    this.userForm = this.formBuilder.group({
-      firstName: [this.user.firstName, [CustomValidator.nameValidator]],
-      lastName: [this.user.lastName, [CustomValidator.nameValidator]],
-      ratingCount: [
-        this.user.ratingCount,
-        [CustomValidator.ratingCountValidator]
-      ]
-    });
+      (this.userForm = this.formBuilder.group({
+        firstName: [this.user.firstName, [CustomValidator.nameValidator]],
+        lastName: [this.user.lastName, [CustomValidator.nameValidator]],
+        ratingCount: [this.user.ratingCount, [CustomValidator.ratingCountValidator]]
+      }));
   }
 
   getUser(): void {
@@ -52,7 +48,9 @@ export class HomePage implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-
+    this.userForm.get('firstName').disable();
+    this.userForm.get('lastName').disable();
+    this.userForm.get('ratingCount').disable();
     this.user.firstName = this.userForm.get('firstName').value;
     this.user.lastName = this.userForm.get('lastName').value;
     this.user.ratingCount = this.userForm.get('ratingCount').value;
@@ -66,20 +64,13 @@ export class HomePage implements OnInit {
   async presentToast(msg: string) {
     const toast = await this.toastController.create({
       message: msg,
-      position: 'middle',
+      position: 'top',
       duration: 2000
     });
     toast
       .present()
       .then(
-        () =>
-          new Promise(resolve =>
-            setTimeout(navigator['app'].exitApp, 2500)
-          )
+        () => new Promise(resolve => setTimeout(navigator['app'].exitApp, 2500))
       );
-
-
-    // toast.present().then(navigator["app"].exitApp);
-    // setTimeout(() => navigator["app"].exitApp, 3000);
   }
 }

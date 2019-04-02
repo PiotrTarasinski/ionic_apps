@@ -28,9 +28,11 @@ import { MaterialModule } from '../material';
       animationDuration: 1000,
       renderOnClick: false,
       titleFontSize: '32',
+      subtitleFontSize: '14',
       units: '/5.0',
       toFixed: 2,
-      showSubtitle: false
+      subtitle: 'Twoja średnia',
+      showSubtitle: true
     }),
     RouterModule.forChild([
       {

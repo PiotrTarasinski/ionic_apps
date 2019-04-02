@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Input Your Data
+      {{!user.average ? 'Input Your Data' : 'Your Score'}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -31,7 +31,12 @@
       <button *ngIf="!userForm.invalid && user.average === null" mat-raised-button color="primary" class="button">Rates</button>
     </form>
     <div class="progress-container" *ngIf="user.average">
-      <circle-progress [percent]="(user.average/5.0)*100" [title]="user.average">
+      <circle-progress
+      [percent]="(user.average/5.0)*100" 
+      [title]="user.average.toFixed(2)" 
+      [outerStrokeColor]="user.average >= 3.0 ? '#78C000' : '#f44336'"
+      [innerStrokeColor]="user.average >= 3.0 ? '#C7E596' : '#F6685E'"
+      [subtitleColor]="user.average >= 3.0 ? '#78C000' : '#f44336'">
       </circle-progress>
     </div>
     <div class="flex-column">
@@ -44,7 +49,7 @@
       </button>
       <button 
       *ngIf="user.average && user.average < 3.0"
-       mat-raised-button color="primary" 
+       mat-raised-button color="warn" 
        class="button"
        (click)="presentToast('Wysyłam podanie o zaliczenie warunkowe!')">
        Tym razem mi nie poszło
