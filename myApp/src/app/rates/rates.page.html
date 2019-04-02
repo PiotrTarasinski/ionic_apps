@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Input Your Rates</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding"> 
+    <div class="flex-column">
+      <mat-form-field class="form-field" *ngFor="let rate of user.rates; index as index; trackBy: customTrackBy">
+        <mat-label>Rate {{index+1}}</mat-label>
+        <mat-select [(ngModel)]="user.rates[index]">
+          <mat-option value='2'>Niedostateczna - 2</mat-option>
+          <mat-option value='3'>Dostateczna - 3</mat-option>
+          <mat-option value='4'>Dobra - 4</mat-option>
+          <mat-option value='5'>Bardzo Dobra - 5</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="button" (click)="confirmRates()">Gotowe</button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Input Your Data
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="flex-column">
+      <mat-form-field class="form-field">
+        <input type="text" matInput placeholder="First Name" formControlName="firstName" required>
+        <mat-error *ngIf="userForm.get('firstName').hasError('required')">First Name is required!</mat-error>
+        <mat-error *ngIf="userForm.get('firstName').hasError('invalidLength')">Length should be between 2 and 24!</mat-error>
+        <mat-error *ngIf="userForm.get('firstName').hasError('invalidPattern')">Incorrect First Name!</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <input type="text" matInput placeholder="Last Name" formControlName="lastName" required>
+        <mat-error *ngIf="userForm.get('lastName').hasError('required')">First Name is required!</mat-error>
+        <mat-error *ngIf="userForm.get('lastName').hasError('invalidLength')">Length should be between 2 and 24!</mat-error>
+        <mat-error *ngIf="userForm.get('lastName').hasError('invalidPattern')">Incorrect First Name!</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <input type="number" matInput placeholder="Rating Count" formControlName="ratingCount" required>
+        <mat-error *ngIf="userForm.get('ratingCount').hasError('required')">Rating Count is required!</mat-error>
+        <mat-error *ngIf="userForm.get('ratingCount').hasError('notInteger')">It's not integer value!</mat-error>
+        <mat-error *ngIf="userForm.get('ratingCount').hasError('wrongValue')">Rating count should be between 5 and 15</mat-error>
+      </mat-form-field>
+
+      <button *ngIf="!userForm.invalid && user.average === null" mat-raised-button color="primary" class="button">Rates</button>
+    </form>
+    <div class="progress-container" *ngIf="user.average">
+      <circle-progress [percent]="(user.average/5.0)*100" [title]="user.average">
+      </circle-progress>
+    </div>
+    <div class="flex-column">
+      <button
+       *ngIf="user.average && user.average >= 3.0" 
+       mat-raised-button color="primary" 
+       class="button"
+      (click)="presentToast('Gratulajce! Otrzymujesz zaliczenie!')">
+       Super :)
+      </button>
+      <button 
+      *ngIf="user.average && user.average < 3.0"
+       mat-raised-button color="primary" 
+       class="button"
+       (click)="presentToast('Wysyłam podanie o zaliczenie warunkowe!')">
+       Tym razem mi nie poszło
+      </button>
+    </div>    
+
+  </div>
+</ion-content>
